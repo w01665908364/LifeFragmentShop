@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="${welcome}"></h1>
+
+    <div th:each="item:${fragments}">
+        <p>编号:<span th:text="${item.id}"></span></p>
+        <p>生命碎片:<span th:text="${item.name}"></span></p>
+        <p>价格:<span th:text="${item.price}"></span></p>
+        <p>数量:<span th:text="${item.stock}"></span></p>
+        <p>是否上架:<span th:text="${item.state}"></span></p>
+    </div>
+
+</body>
+</html>
