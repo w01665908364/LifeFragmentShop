@@ -10,11 +10,11 @@ import java.util.List;
 @Service
 public class LifeFragmentService {
 
-    @Autowired private LifeFragmentMapper mapper;
+    @Autowired private LifeFragmentMapper mapper;//自动生成生命碎片对象
 
     public List<LifeFragment> getAllFragments(){
 
-        List<LifeFragment> LifeFragments = mapper.findAll();
+        List<LifeFragment> LifeFragments = mapper.findAll();//使用mapper访问数据库
         return LifeFragments;
     }
 

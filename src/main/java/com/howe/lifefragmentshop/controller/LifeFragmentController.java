@@ -1,7 +1,9 @@
 package com.howe.lifefragmentshop.controller;
 import com.howe.lifefragmentshop.mapper.LifeFragmentMapper;
+import com.howe.lifefragmentshop.mapper.OrderMapper;
 import com.howe.lifefragmentshop.pojo.LifeFragment;
 import com.howe.lifefragmentshop.service.LifeFragmentService;
+import com.howe.lifefragmentshop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import java.util.List;
 public class LifeFragmentController {
 
     @Autowired private LifeFragmentService service;
+    @Autowired private OrderService orderService;
 
     @GetMapping("/Home")
     public String Home(Model model) {
@@ -24,6 +27,8 @@ public class LifeFragmentController {
         model.addAttribute("welcome", "欢迎来到我的生命碎片商店");
         List<LifeFragment> fragments = service.getAllFragments();//调用service获取对象列表
         model.addAttribute("fragments",fragments);//存到model中
+
+
         return "home";
     }
 }
