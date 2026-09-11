@@ -28,7 +28,6 @@ public class LifeFragmentController {
         List<LifeFragment> fragments = service.getAllFragments();//调用service获取对象列表
         model.addAttribute("fragments",fragments);//存到model中
 
-
         return "home";
     }
 }

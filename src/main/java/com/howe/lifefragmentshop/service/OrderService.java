@@ -34,17 +34,17 @@ public class OrderService {
         //先实现创造一个order然后改数据库。
         //
         Order order = new Order();
-        LifeFragment lifeFragment = new LifeFragment();
 
         //查询当前登录用户，为购方id
         //调用set设置到order中，但是怎么获取其他的属性呢？
         //要知道碎片id、销方id、购方id、购买时间、状态
-        lifeFragment = lifeFragmentMapper.selectById(fragmentId);//查生命碎片的信息
+        LifeFragment lifeFragment = lifeFragmentMapper.selectById(fragmentId);//查生命碎片的信息
         order.setFragmenId(lifeFragment.getId());//订单赋值：碎片id
-        order.setSellerId();//订单赋值：销方id
-        //订单赋值：购方id
+        order.setSellerId(lifeFragment.getSellerId());//订单赋值：销方id
+        order.setBuyerId(1);//订单赋值：购方id,模拟数据***
         order.setBuyTime(String.valueOf(LocalDateTime.now()));//订单赋值：购买时间
-        order.setStatus(1);//订单赋值：状态
+        order.setStatus(0);//订单赋值：状态
+
 
 
         //调用mapper改数据库，改完返回

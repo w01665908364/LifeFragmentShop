@@ -9,6 +9,7 @@
         private int stock;//数量
         private String description;//描述
         private BigDecimal price;
+        private int sellerId;
         private String img;//图片不知道用什么类型，暂定字符串
         private int state;//当前状态,1就是上架，0就是下架
 
@@ -54,6 +55,14 @@
 
         public void setPrice(BigDecimal price) {
             this.price = price;
+        }
+
+        public int getSellerId() {
+            return sellerId;
+        }
+
+        public void setSellerId(int sellerId) {
+            this.sellerId = sellerId;
         }
 
         public String getImg() {
