@@ -2,41 +2,111 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>生命碎片商店</title>
+    <style>
+        /* 极简全局样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f4f5f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 垂直居中排列所有元素 */
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 10px;
+        }
+
+        /* 顶部导航条样式 */
+        .top-nav {
+            width: 100%;
+            max-width: 600px; /* 限制最大宽度，与商品列表对齐 */
+            display: flex;
+            justify-content: flex-end; /* 让按钮靠右对齐 */
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8e8e8; /* 底部分割线 */
+            margin-bottom: 20px;
+        }
+        .top-nav a {
+            text-decoration: none;
+            color: #1890ff;
+            margin-left: 20px; /* 按钮之间的间距 */
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .top-nav a:hover {
+            color: #40a9ff;
+            text-decoration: underline;
+        }
+
+        /* 商品卡片样式 */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+            width: 300px;
+        }
+        .card p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        /* 购买按钮样式 */
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+        button:hover {
+            background-color: #ff5252;
+        }
+    </style>
 </head>
 <body>
 
-    <h1 th:text="${welcome}"></h1>
+<!-- 顶部导航 -->
+<div class="top-nav">
+    <a th:href="@{/register}">注册</a>
+    <a th:href="@{/login}">登录</a>
+</div>
 
-    <div th:each="item:${fragments}">
-        <p>编号:<span th:text="${item.id}"></span></p>
-        <p>生命碎片:<span th:text="${item.name}"></span></p>
-        <p>价格:<span th:text="${item.price}"></span></p>
-        <p>数量:<span th:text="${item.stock}"></span></p>
-        <p>是否上架:<span th:text="${item.state}"></span></p>
-        <a th:href="@{/buy(fragmentId=${item.id})}" >
-            <button>购买</button>
-        </a>
-    </div>
+<!-- 欢迎标题 -->
+<h1 th:text="${welcome}"></h1>
 
-    <div>
-        <a th:href="@{/register}">注册</a>
-        <a th:href="@{/login}">登录</a>
-    </div>
+<!-- 商品列表 -->
+<div th:each="item:${fragments}" class="card">
+    <p>编号: <span th:text="${item.id}"></span></p>
+    <p>生命碎片: <strong th:text="${item.name}"></strong></p>
+    <!-- 修复了价格显示：数字被包在 span 里，并加了红色样式 -->
+    <p>价格: <span style="color: #ff6b6b; font-weight: bold;">¥<span th:text="${item.price}"></span></span></p>
+    <p>数量: <span th:text="${item.stock}"></span></p>
+    <p>是否上架: <span th:text="${item.state == 1 ? '已上架' : '已下架'}"></span></p>
+    <a th:href="@{/buy(fragmentId=${item.id})}">
+        <button>购买</button>
+    </a>
+</div>
 
-
-
-        <!-- ⬇️ JS 写在这里，页面元素已经全部加载完了 -->
-        <script th:if="${param.buySuccess != null}">
-            alert("购买成功！");
-        </script>
-        <script th:if="${param.buyError != null}">
-            alert("购买失败:" + "[[${param.buyError}]]");
-        </script>
-        <!-- 注册成功的js代码要写在这个页面，因为成功后会跳转到这个页面 -->
-        <script th:if="${param.registerSuccess != null}">
-            alert("注册成功！");
-        </script>
+<!-- JS 弹窗逻辑 -->
+<script th:if="${param.buySuccess != null}">
+    alert("购买成功！");
+</script>
+<script th:if="${param.buyError != null}">
+    alert("购买失败:" + "[[${param.buyError}]]");
+</script>
+<script th:if="${param.registerSuccess != null}">
+    alert("注册成功！");
+</script>
 
 </body>
 </html>

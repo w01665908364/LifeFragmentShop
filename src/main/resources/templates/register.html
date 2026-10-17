@@ -1,36 +1,104 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-<!-- Thymeleaf 的所有 th: 属性（th:action、th:if）都不会被解析，表单提交后行为会出错。-->
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户注册</title>
+    <style>
+        /* 极简全局样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f4f5f7;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 表单卡片样式 */
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+        /* 输入框及标签样式 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* 确保 padding 不会撑破宽度 */
+        }
+        input:focus {
+            border-color: #1890ff;
+            outline: none;
+        }
+        /* 提交按钮样式 */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #40a9ff;
+        }
+    </style>
 </head>
 <body>
+
+<div class="form-container">
     <form th:action="@{/register}" method="post">
-        <h1>注册</h1>
-        <!-- 用户名输入框 -->
-        <label for="namename">账号:</label>
-        <input type="text" id="namename" name="username" required><!-- name的参数要与对象类中的属性名对应 --><p></p>
+        <h1>注 册</h1>
 
-        <!-- 密码输入框 -->
-        <label for="password">密码:</label>
-        <input type="password" id="password" name="password" required><p></p>
-        <label for="password">重新输入密码:</label>
-        <input type="password" id="password2" name="password2" required><p></p>
+        <div class="form-group">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
 
-        <!-- 昵称 -->
-        <label for="nickname">昵称:</label>
-        <input type="text" id="nickname" name="nickname" required><p></p>
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
 
-        <!-- 提交类型的按钮 -->
-        <button type="submit">提交</button>
+        <div class="form-group">
+            <label for="password2">确认密码:</label>
+            <input type="password" id="password2" name="password2" required>
+        </div>
 
+        <div class="form-group">
+            <label for="nickname">昵称:</label>
+            <input type="text" id="nickname" name="nickname" required>
+        </div>
+
+        <button type="submit">提 交</button>
     </form>
+</div>
 
-    <!-- ⬇️ JS 写在这里，页面元素已经全部加载完了 -->
-
-    <script th:if="${param.registerError != null}">
-        alert("注册失败:" + "[[${param.registerError}]]");
-    </script>
+<!-- 错误弹窗逻辑 -->
+<script th:if="${param.registerError != null}">
+    alert("注册失败:" + "[[${param.registerError}]]");
+</script>
 </body>
 </html>
