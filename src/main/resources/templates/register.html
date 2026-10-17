@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<!-- Thymeleaf 的所有 th: 属性（th:action、th:if）都不会被解析，表单提交后行为会出错。-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="@{/register}" method="post">
+        <h1>注册</h1>
+        <!-- 用户名输入框 -->
+        <label for="namename">账号:</label>
+        <input type="text" id="namename" name="username" required><!-- name的参数要与对象类中的属性名对应 --><p></p>
+
+        <!-- 密码输入框 -->
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required><p></p>
+        <label for="password">重新输入密码:</label>
+        <input type="password" id="password2" name="password2" required><p></p>
+
+        <!-- 昵称 -->
+        <label for="nickname">昵称:</label>
+        <input type="text" id="nickname" name="nickname" required><p></p>
+
+        <!-- 提交类型的按钮 -->
+        <button type="submit">提交</button>
+
+    </form>
+
+    <!-- ⬇️ JS 写在这里，页面元素已经全部加载完了 -->
+
+    <script th:if="${param.registerError != null}">
+        alert("注册失败:" + "[[${param.registerError}]]");
+    </script>
+</body>
+</html>

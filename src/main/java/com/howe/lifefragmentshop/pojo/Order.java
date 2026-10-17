@@ -23,11 +23,11 @@ public class Order {
         this.id = id;
     }
 
-    public int getFragmenId() {
+    public int getFragmentId() {
         return fragmentId;
     }
 
-    public void setFragmenId(int fragmenId) {
+    public void setFragmentId(int fragmenId) {
         this.fragmentId = fragmenId;
     }
 

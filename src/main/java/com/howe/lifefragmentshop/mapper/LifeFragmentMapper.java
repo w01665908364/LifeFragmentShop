@@ -3,6 +3,7 @@ package com.howe.lifefragmentshop.mapper;
 import com.howe.lifefragmentshop.pojo.LifeFragment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface LifeFragmentMapper {
     @Select("select * from life_fragment where id = #{fragmentId}")
     LifeFragment selectById(int fragmentId);
 
+    //减少1个库存
+    @Update("update life_fragment set stock = stock-1 where id = #{fragmentId} and stock >= 1")
+    int decreaseStock(int fragmentId);
 }

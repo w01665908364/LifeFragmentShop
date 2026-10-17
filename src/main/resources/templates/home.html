@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+
     <h1 th:text="${welcome}"></h1>
 
     <div th:each="item:${fragments}">
@@ -13,8 +14,29 @@
         <p>价格:<span th:text="${item.price}"></span></p>
         <p>数量:<span th:text="${item.stock}"></span></p>
         <p>是否上架:<span th:text="${item.state}"></span></p>
+        <a th:href="@{/buy(fragmentId=${item.id})}" >
+            <button>购买</button>
+        </a>
     </div>
 
+    <div>
+        <a th:href="@{/register}">注册</a>
+        <a th:href="@{/login}">登录</a>
+    </div>
+
+
+
+        <!-- ⬇️ JS 写在这里，页面元素已经全部加载完了 -->
+        <script th:if="${param.buySuccess != null}">
+            alert("购买成功！");
+        </script>
+        <script th:if="${param.buyError != null}">
+            alert("购买失败:" + "[[${param.buyError}]]");
+        </script>
+        <!-- 注册成功的js代码要写在这个页面，因为成功后会跳转到这个页面 -->
+        <script th:if="${param.registerSuccess != null}">
+            alert("注册成功！");
+        </script>
 
 </body>
 </html>

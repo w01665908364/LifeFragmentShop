@@ -10,10 +10,10 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    private String nickname;
-    private String avatar;
-    private String role;
-    private LocalDateTime createdAt;
+    private String nickname;//昵称
+    private String avatar;//头像
+    private String role;//角色admin是管理员，user 是用户
+    private LocalDateTime createdAt;//注册时间
 
     // ==================== Getter and Setter ====================
 
