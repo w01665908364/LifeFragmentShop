@@ -6,7 +6,21 @@
 </head>
 <body>
 
+    <!-- 情况1：没登录（session里没有loginUser），显示注册和登录 -->
+    <div class="top-nav" th:if="${session.loginUser == null}">
+        <a th:href="@{/register}">注册</a>
+        <a th:href="@{/login}">登录</a>
+    </div>
+    <!-- 情况2：已经登录，显示欢迎语和退出按钮 -->
+    <div class="top-nav" th:if="${session.loginUser != null}">
+        <span style="color: #333; margin-right: 15px;">
+        欢迎你，<strong th:text="${session.loginUser.nickname}"></strong>
+        </span>
+        <a th:href="@{/logout}">退出登录</a>
+    </div>
+
     <h1 th:text="${welcome}"></h1>
+
 
     <div th:each="item:${fragments}">
         <p>编号:<span th:text="${item.id}"></span></p>
@@ -19,10 +33,7 @@
         </a>
     </div>
 
-    <div>
-        <a th:href="@{/register}">注册</a>
-        <a th:href="@{/login}">登录</a>
-    </div>
+
 
 
 
@@ -33,9 +44,14 @@
         <script th:if="${param.buyError != null}">
             alert("购买失败:" + "[[${param.buyError}]]");
         </script>
+
         <!-- 注册成功的js代码要写在这个页面，因为成功后会跳转到这个页面 -->
         <script th:if="${param.registerSuccess != null}">
             alert("注册成功！");
+        </script>
+
+        <script th:if="${param.loginSuccess != null}">
+            alert("登录成功！");
         </script>
 
 </body>

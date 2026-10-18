@@ -14,6 +14,7 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    //注册账号
     @Transactional//一个事务
     public int addUser(User user){//创建用户的方法
 
@@ -30,5 +31,20 @@ public class UserService {
 
         //返回一个sql中的改变行数,如果返回0就是没有创建成功，大于0就是创建成功了
         return userMapper.insertUser(user);
+    }
+
+    //登录账号
+    public User finduser(String username,String password){
+        //用账号查密码对不对
+        User user_ku = userMapper.findByUsername(username);
+
+        //判断账号是否为空
+        if(user_ku==null)throw new RuntimeException("账号或密码错误！");
+        //判断密码是否正确
+        if(user_ku.getPassword().equals(password)){//字符串比较用equals
+            return user_ku;//登录成功,返回用户信息
+        }else{
+            throw new RuntimeException("账号或密码错误！");//登录失败：账号或密码错误
+        }
     }
 }

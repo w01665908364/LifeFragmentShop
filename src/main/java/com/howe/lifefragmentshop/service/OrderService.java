@@ -2,8 +2,10 @@
 
     import com.howe.lifefragmentshop.mapper.LifeFragmentMapper;
     import com.howe.lifefragmentshop.mapper.OrderMapper;
+    import com.howe.lifefragmentshop.mapper.UserMapper;
     import com.howe.lifefragmentshop.pojo.LifeFragment;
     import com.howe.lifefragmentshop.pojo.Order;
+    import jakarta.servlet.http.HttpSession;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,7 @@
         //控制层传一个生命碎片的id就行了
         //事务的使用，就是后面如果有throw抛出异常，程序就会自动回滚撤销上面的代码
         @Transactional//事务，会回滚
-        public int addOrder(int fragmentId) {
+        public int addOrder(int fragmentId,int userID) {
 
             // 1. 先查商品
             LifeFragment lifeFragment = lifeFragmentMapper.selectById(fragmentId);
@@ -48,7 +50,7 @@
             Order order = new Order();
             order.setFragmentId(lifeFragment.getId());
             order.setSellerId(lifeFragment.getSellerId());
-            order.setBuyerId(1);                    // 模拟，后续从登录状态拿
+            order.setBuyerId(userID);
             order.setStatus(0);
 
             // 6. 插入订单

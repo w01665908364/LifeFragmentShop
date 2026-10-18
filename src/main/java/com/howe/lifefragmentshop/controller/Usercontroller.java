@@ -2,6 +2,7 @@ package com.howe.lifefragmentshop.controller;
 
 import com.howe.lifefragmentshop.service.UserService;
 import com.howe.lifefragmentshop.pojo.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class Usercontroller {
         return "register";  // 返回 templates/register.html
     }
     @PostMapping("/register")
-    public String buy(@ModelAttribute User user,//代表前端提交按钮提交的数据提交到user里
+    public String register(@ModelAttribute User user,//代表前端提交按钮提交的数据提交到user里
                       @RequestParam("password2") String password2) {
         try {
 
@@ -61,5 +62,40 @@ public class Usercontroller {
 
 
     }
+
+    // 显示登录页面（GET 请求）
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";  // 返回 templates/login.html
+    }
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        HttpSession session) {
+        try{
+
+
+            //传入账号密码到service对数据库的信息
+            User user = userService.finduser(username,password);//成功返回一个用户
+
+            //把用户传如session
+            session.setAttribute("loginUser", user);
+
+            return "redirect:/Home?loginSuccess=true";//登录成功
+        } catch (RuntimeException e) {//接住service里的异常
+            String msg = URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            return "redirect:/login?loginError=" + msg;
+        }
+
+    }
+
+    //退出登录
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();//清空session
+        return "redirect:/Home";
+    }
+
+
 
 }
