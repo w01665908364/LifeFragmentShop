@@ -18,10 +18,6 @@ public class UserService {
     @Transactional//一个事务
     public int addUser(User user){//创建用户的方法
 
-        //判断属性值
-        //是否不为空
-        if(user.getUsername()==null||user.getPassword()==null||user.getNickname()==null)
-            throw new RuntimeException("请输入必填参数");
 
         //查询用户是否存在
         if(userMapper.findByUsername(user.getUsername())!=null)
@@ -38,8 +34,6 @@ public class UserService {
         //用账号查密码对不对
         User user_ku = userMapper.findByUsername(username);
 
-        //判断账号是否为空
-        if(user_ku==null)throw new RuntimeException("账号或密码错误！");
         //判断密码是否正确
         if(user_ku.getPassword().equals(password)){//字符串比较用equals
             return user_ku;//登录成功,返回用户信息

@@ -2,6 +2,7 @@ package com.howe.lifefragmentshop.controller;
 
 import com.howe.lifefragmentshop.pojo.LifeFragment;
 import com.howe.lifefragmentshop.pojo.User;
+import com.howe.lifefragmentshop.pojo.Order;
 import com.howe.lifefragmentshop.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ public class OrderController {
 
             // 2. 如果没登录，直接打回登录页
             if (loginUser == null) {
-                String msg = URLEncoder.encode("请先登录！", StandardCharsets.UTF_8);
+                String msg = URLEncoder.encode("购买失败，请先登录！", StandardCharsets.UTF_8);
                 return "redirect:/login?loginError=" + msg;
             }
             //调用service的方法，创建订单,返回更改行数，传入用户id
             int flag = orderService.addOrder(fragmentId,loginUser.getId());
+
             //提示弹窗，刷新页面
             if(flag>0){
                 return "redirect:/Home?buySuccess=true";
@@ -48,6 +50,21 @@ public class OrderController {
             return "redirect:/Home?buyError=" + msg;
         }
 
+    }
+    //生命碎片购买记录
+    @GetMapping("/admin/orders")
+    public String adminOrders(HttpSession session, Model model) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        if (!"admin".equals(loginUser.getRole())) {//不是管理员账号也看不了
+            return "redirect:/Home?accessDenied=true";
+        }
+
+        List<Order> orders = orderService.getOrdersBySellerId(loginUser.getId());
+        model.addAttribute("orders", orders);//这里存了后前端用
+        return "admin-orders";
     }
 
 }

@@ -11,6 +11,7 @@
     import org.springframework.transaction.annotation.Transactional;
 
     import java.time.LocalDateTime;
+import java.util.List;
 
     /*要写订单的逻辑代码
     1、要调用OrderMapper来访问数据库，
@@ -48,12 +49,17 @@
 
             // 5. 扣减成功后，再构建订单
             Order order = new Order();
-            order.setFragmentId(lifeFragment.getId());
-            order.setSellerId(lifeFragment.getSellerId());
-            order.setBuyerId(userID);
-            order.setStatus(0);
+            order.setFragmentId(lifeFragment.getId());//订单id
+            order.setSellerId(lifeFragment.getSellerId());//销方id
+            order.setBuyerId(userID);//购方id
+            order.setStatus(0);//状态默认是待付款
 
             // 6. 插入订单
             return orderMapper.insertOrder(order);
+        }
+
+        //用销方id查所有订单
+        public List<Order> getOrdersBySellerId(int sellerId) {
+            return orderMapper.findBySellerId(sellerId);
         }
     }

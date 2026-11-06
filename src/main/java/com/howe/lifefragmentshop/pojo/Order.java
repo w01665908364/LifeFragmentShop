@@ -9,7 +9,10 @@ public class Order {
     private int buyerId;//购方id
     private String buyTime;//购买时间
     private String finishTime;//完成时间
-    private int status;//订单状态
+    private int status;//订单状态，状态：0待付款，1进行中，2已完成，3取消
+    private String buyerUsername;
+    private String buyerNickname;
+    private String fragmentName;
 
     //无参构造器
     public Order(){
@@ -70,6 +73,13 @@ public class Order {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public String getBuyerUsername() { return buyerUsername; }
+    public void setBuyerUsername(String buyerUsername) { this.buyerUsername = buyerUsername; }
+    public String getBuyerNickname() { return buyerNickname; }
+    public void setBuyerNickname(String buyerNickname) { this.buyerNickname = buyerNickname; }
+    public String getFragmentName() { return fragmentName; }
+    public void setFragmentName(String fragmentName) { this.fragmentName = fragmentName; }
 
 
 

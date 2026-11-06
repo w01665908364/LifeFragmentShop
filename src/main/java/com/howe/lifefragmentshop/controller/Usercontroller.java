@@ -31,6 +31,12 @@ public class Usercontroller {
         try {
 
 
+            //账号判空
+            if(user.getUsername()==null){
+                String msg = URLEncoder.encode("账号不能为空", StandardCharsets.UTF_8);
+                return "redirect:/register?registerError=" + msg;//失败的参数名要统一registerError
+            }
+
             //要先进行判空否则回空指针异常
             if(user.getPassword()==null||password2==null){
                 String msg = URLEncoder.encode("密码不能为空", StandardCharsets.UTF_8);
@@ -44,7 +50,8 @@ public class Usercontroller {
             }
 
             int flag = userService.addUser(user);//调用service的方法，创建订单,返回更改行数
-            //
+
+            //返回前端
             if(flag>0){
                 //跳转到登录页面
                 return "redirect:/Home?registerSuccess=true";//带个成功的标记
@@ -68,17 +75,21 @@ public class Usercontroller {
     public String showLoginPage() {
         return "login";  // 返回 templates/login.html
     }
+    //post
     @PostMapping("/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         HttpSession session) {
         try{
-
-
+            //判空
+            if(username==null||password==null){
+                String msg = URLEncoder.encode("账号或密码不能为空", StandardCharsets.UTF_8);
+                return "redirect:/register?registerError=" + msg;//失败的参数名要统一registerError
+            }
             //传入账号密码到service对数据库的信息
             User user = userService.finduser(username,password);//成功返回一个用户
 
-            //把用户传如session
+            //把用户传入session
             session.setAttribute("loginUser", user);
 
             return "redirect:/Home?loginSuccess=true";//登录成功

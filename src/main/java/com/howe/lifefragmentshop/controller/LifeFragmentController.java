@@ -24,7 +24,7 @@ public class LifeFragmentController {
     @GetMapping("/Home")
     public String Home(Model model) {
 
-        model.addAttribute("welcome", "欢迎来到我的生命碎片商店");
+        model.addAttribute("welcome", "欢迎来到生命碎片商店");
         List<LifeFragment> fragments = service.getAllFragments();//调用service获取对象列表
         model.addAttribute("fragments",fragments);//存到model中，前端好取
 
